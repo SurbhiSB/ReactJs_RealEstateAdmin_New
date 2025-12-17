@@ -22,7 +22,7 @@ import CustomerList from './pages/members/CustomerList';
 import AgentList from './pages/members/AgentList';
 import ItemMasterPage from './pages/purchase/ItemMaster';
 import PurchaseOrderPage from './pages/purchase/PurchaseOrder';
-import PoList from './components/purchase/PoList';
+import PoList from './components/purchase/POList';
 import CompanyPaymentPage from './pages/purchase/CompanyPayment';
 import PaymentHistoryPage from './pages/purchase/PaymentHistory';
 import PurchaseBillPage from './pages/purchase/PurchaseBill';
