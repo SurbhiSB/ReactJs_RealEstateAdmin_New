@@ -15,7 +15,8 @@ import {
 //import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
+
 import { useNavigate } from "react-router-dom";
 
 export default function ProjectList() {
@@ -124,21 +125,24 @@ export default function ProjectList() {
   };
 
   const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Projects", 14, 10);
-    doc.autoTable({
-      head: [["#", "Group", "Project", "Type", "Units", "Status"]],
-      body: data.map((row, i) => [
-        i + 1,
-        row.groupId?.groupName || "-",
-        row.projectName,
-        row.projectType,
-        row.noOfUnits || "-",
-        row.status,
-      ]),
-    });
-    doc.save("projects.pdf");
-  };
+  const doc = new jsPDF();
+  doc.text("Projects", 14, 10);
+
+  autoTable(doc, {
+    head: [["#", "Group", "Project", "Type", "Units", "Status"]],
+    body: data.map((row, i) => [
+      i + 1,
+      row.groupId?.groupName || "-",
+      row.projectName,
+      row.projectType,
+      row.noOfUnits || "-",
+      row.status,
+    ]),
+  });
+
+  doc.save("projects.pdf");
+};
+
 
   const token = localStorage.getItem("adminToken");
 if (token) {
