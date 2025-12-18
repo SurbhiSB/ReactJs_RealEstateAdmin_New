@@ -4,9 +4,25 @@ import axios from "axios";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+//import { saveAs } from "file-saver";
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+
+const exportToExcel = () => {
+  const worksheet = XLSX.utils.json_to_sheet(
+    filteredMembers.map((m) => ({
+      Name: m.fullName,
+      Email: m.email,
+      Phone: m.phone,
+    }))
+  );
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Members");
+
+  // Browser-safe download (Vercel safe)
+  XLSX.writeFile(workbook, "members.xlsx");
+};
 
 
 export default function MemberList() {
@@ -21,6 +37,8 @@ export default function MemberList() {
   useEffect(() => {
     fetchMembers(currentPage);
   }, [currentPage]);
+
+  
 
   const token = localStorage.getItem("adminToken");
 if (token) {
